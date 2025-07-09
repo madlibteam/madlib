@@ -407,11 +407,9 @@ impl MaxClient {
             Err("WebSocket not connected".into())
         }
     }
-    // TODO fix send prev request to get reactions
-    /*
-    {"ver":11,"cmd":0,"seq":1,"opcode":181,"payload":{"chatId":-123,"messageId":"123","count":100}} */
     
-    fn set_reaction(
+    // Sets a reaction to a message in a chat.
+    pub fn set_reaction(
         &mut self,
         chat_id: i64,
         message_id: impl Into<String>,
@@ -421,7 +419,10 @@ impl MaxClient {
             self.connect()?;
         }
 
+        let message_id_str = message_id.into();
+
         if let Some(ws) = &mut self.websocket {
+
             let request = types::reactions::SetReactionRequest {
                 ver: 11,
                 cmd: 0,
@@ -429,7 +430,7 @@ impl MaxClient {
                 opcode: 178,
                 payload: types::reactions::SetReactionRequestPayload {
                     chat_id,
-                    message_id: message_id.into(),
+                    message_id: message_id_str,
                     reaction: types::reactions::Reaction {
                         reaction_type: "EMOJI".to_string(),
                         id: emoji.into(),
@@ -441,7 +442,6 @@ impl MaxClient {
             ws.send(Message::Text(request_json))?;
             
             let response = ws.read()?;
-            println!("Response: {}", response.to_text()?);
             let response: types::reactions::SetReactionResponse = serde_json::from_str(response.to_text()?)?;
             
             Ok(response)
@@ -450,8 +450,8 @@ impl MaxClient {
         }
     }
 
-    // ToDo: Fix
-    fn remove_reaction(
+    // Removes a reaction from a message in a chat.
+    pub fn remove_reaction(
         &mut self,
         chat_id: i64,
         message_id: impl Into<String>
@@ -464,7 +464,7 @@ impl MaxClient {
             let request = types::reactions::RemoveReactionRequest {
                 ver: 11,
                 cmd: 0,
-                seq: 100,
+                seq: 1,
                 opcode: 179,
                 payload: types::reactions::RemoveReactionRequestPayload {
                     chat_id,

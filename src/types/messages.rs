@@ -58,13 +58,38 @@ pub struct Message {
     pub sender: i64,
     #[serde(rename = "reactionInfo")]
     pub reaction_info: Option<reactions::MessageReactions>,
+    #[serde(default)]
+    pub link: Option<GetMessageLink>,
     pub id: String,
     pub time: i64,
     pub text: String,
     #[serde(rename = "type")]
     pub message_type: String,
     pub cid: Option<i64>,
-    pub attaches: Vec<chats::Attachment>,
+    pub attaches: Option<Vec<chats::Attachment>>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct GetMessageLink {
+    #[serde(rename = "type")]
+    pub link_type: String,
+    pub message: Box<Message>,
+    #[serde(rename = "chatId")]
+    pub chat_id: i64,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Preview {
+    pub duration: Option<i32>,
+    #[serde(rename = "previewData")]
+    pub preview_data: String,
+    pub thumbnail: Option<String>,
+    #[serde(rename = "_type")]
+    pub preview_type: String,
+    pub width: i32,
+    #[serde(rename = "videoId", default)]
+    pub video_id: i64,
+    pub height: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

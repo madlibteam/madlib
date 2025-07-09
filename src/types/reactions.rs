@@ -101,7 +101,7 @@ pub struct SetReactionResponse {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SetReactionResponsePayload {
     #[serde(rename = "reactionInfo")]
-    pub reaction_info: MessageReactions,
+    pub reaction_info: Option<MessageReactions>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -134,5 +134,5 @@ pub struct RemoveReactionResponse {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct RemoveReactionResponsePayload {
     #[serde(rename = "reactionInfo")]
-    pub reaction_info: HashMap<String, Value>, // Empty object in response
+    pub reaction_info: Option<HashMap<String, Value>>, // Empty object in response
 }

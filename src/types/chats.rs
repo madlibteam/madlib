@@ -63,14 +63,20 @@ pub struct LastMessage {
 pub struct Attachment {
     #[serde(default)]
     pub preview: Option<Preview>,
+
     #[serde(default)]
     pub size: Option<i64>,
+
     #[serde(rename = "_type")]
     pub attachment_type: String,
+
     #[serde(default)]
     pub name: Option<String>,
+
     #[serde(rename = "fileId", default)]
     pub file_id: Option<i64>,
+
+    #[serde(default)]
     pub token: Option<String>,
 }
 
@@ -78,13 +84,22 @@ pub struct Attachment {
 pub struct Preview {
     #[serde(rename = "previewData")]
     pub preview_data: String,
-    #[serde(rename = "baseUrl")]
-    pub base_url: String,
+
+    #[serde(default)]
+    pub duration: Option<i64>,
+
+    #[serde(default)]
+    pub thumbnail: Option<String>,
+
     #[serde(rename = "_type")]
     pub preview_type: String,
+
     pub width: i32,
-    #[serde(rename = "photoId")]
-    pub photo_id: i64,
+
+    #[serde(rename = "videoId")]
+    #[serde(default)]
+    pub video_id: Option<i64>,
+
     pub height: i32,
 }
 
