@@ -1,0 +1,13 @@
+[package]
+name = "madmax"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tungstenite = { version = "0.20", features = ["native-tls"] }
+url = "2.4"
+serde_json = "1.0"
+uuid = { version = "1.4", features = ["v4"] }
+serde = { version = "1.0", features = ["derive"] }
+reqwest = { version = "0.12.21", features = ["multipart"] }
+tokio = { version = "1.46.1", features = ["macros", "rt", "rt-multi-thread"] }
