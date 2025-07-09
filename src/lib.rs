@@ -16,7 +16,7 @@ struct MaxClient {
 }
 
 impl MaxClient {
-    fn new() -> Self {
+    pub fn new() -> Self {
         // EVERYTHING IS INTERCONNECTED
         println!("Welcome to MadLib 0.1!\nRemember: everything interconnected\n");
         MaxClient {
@@ -70,7 +70,7 @@ impl MaxClient {
         Ok(())
     }
 
-    fn disconnect(&mut self) {
+    pub fn disconnect(&mut self) {
         if let Some(ws) = &mut self.websocket {
             let _ = ws.close(None);
         }
@@ -86,7 +86,7 @@ impl MaxClient {
     }
 
     // Authenticates the user by phone number.
-    fn authenticate(&mut self, phone_number: String) -> Result<String, Box<dyn std::error::Error>> {
+    pub fn authenticate(&mut self, phone_number: String) -> Result<String, Box<dyn std::error::Error>> {
         self.phone_number = phone_number;
         if self.websocket.is_none() {
             self.connect()?;
@@ -161,7 +161,7 @@ impl MaxClient {
     }
 
     // Saves the auth token to a session file.
-    fn save_token(&self) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn save_token(&self) -> Result<(), Box<dyn std::error::Error>> {
         if let Some(token) = &self.auth_token {
             fs::write("mad.session", token)?;
         }
@@ -169,7 +169,7 @@ impl MaxClient {
     }
 
     // Loads the auth token from the session file.
-    fn load_token(&mut self) -> Result<Option<String>, Box<dyn std::error::Error>> {
+    pub fn load_token(&mut self) -> Result<Option<String>, Box<dyn std::error::Error>> {
         match fs::read_to_string("mad.session") {
             Ok(token) => {
                 let token = token.trim().to_string();
